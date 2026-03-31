@@ -85,10 +85,21 @@ wechat-article-to-obsidian/
     └── parse.mjs   # HTML → Markdown parser with cleanup
 ```
 
+## How articles are saved to Obsidian
+
+The skill uses the [obsidian-cli](https://github.com/Yakitrak/obsidian-cli) to write notes into your vault:
+
+```bash
+obsidian create path="notes/wechat/Article Title.md" content="..." vault=MyVault
+```
+
+If `obsidian-cli` is not installed, it falls back to writing directly to your vault's disk path.
+
 ## Requirements
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
-- [Obsidian](https://obsidian.md) with [obsidian-cli](https://github.com/Yakitrak/obsidian-cli) (optional — falls back to direct file write)
+- [Obsidian](https://obsidian.md)
+- [obsidian-cli](https://github.com/Yakitrak/obsidian-cli) (recommended — falls back to direct file write if not available)
 - Node.js >= 18
 - curl
 
