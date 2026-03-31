@@ -1,8 +1,10 @@
 # WeChat Article to Obsidian
 
-A Claude Code skill that saves WeChat public account articles (微信公众号文章) as clean Markdown notes in your Obsidian vault.
+An AI Agent skill that saves WeChat public account articles (微信公众号文章) as clean Markdown notes in your Obsidian vault.
 
 No browser needed. No plugins. No login. Just give it a link.
+
+Works with any AI coding agent that can run shell commands — Claude Code, OpenClaw, Cursor, Windsurf, etc.
 
 ## Features
 
@@ -12,7 +14,7 @@ No browser needed. No plugins. No login. Just give it a link.
 - **Smart cleanup** — auto-removes WeChat decoration text (THUMB/STOPPING), merges PART headings, strips promotional tails (关注/点赞/在看)
 - **YAML frontmatter** — title, author, publish date, source URL
 - **Batch support** — save multiple articles at once
-- **Natural language paths** — tell Claude where to save: "存到 reading/tech 目录"
+- **Natural language paths** — tell your AI agent where to save: "存到 reading/tech 目录"
 - **One-time config** — set your vault name and default path once, then it just works
 
 ## How it works
@@ -21,22 +23,34 @@ WeChat MP articles are server-side rendered — the full article HTML is returne
 
 ## Installation
 
-Copy the `wechat-article-to-obsidian` folder to your Claude Code skills directory:
+### Claude Code
+
+Copy the skill folder to your Claude Code skills directory:
 
 ```bash
 cp -r wechat-article-to-obsidian ~/.claude/skills/
 ```
 
+### Other AI Agents
+
+The core scripts work standalone. Point your agent to use:
+
+- `scripts/fetch.sh <url> <output.html>` — fetch the article HTML
+- `scripts/parse.mjs <input.html>` — convert to Markdown (stdout)
+- `scripts/parse.mjs <input.html> --json` — get metadata as JSON
+
+Feed the `SKILL.md` file to your agent as a system prompt or instruction file so it knows how to orchestrate the workflow.
+
 ## Usage
 
-Just give Claude a WeChat article link:
+Just give your AI agent a WeChat article link:
 
 ```
 帮我把这篇文章存到 Obsidian
 https://mp.weixin.qq.com/s/xxxxx
 ```
 
-On first use, Claude will ask you two questions:
+On first use, the agent will ask you two questions:
 1. Your Obsidian vault name
 2. Default save path (e.g., `notes/wechat`)
 
@@ -77,7 +91,7 @@ Article content with **bold**, *italic*, `code`, and images preserved...
 
 ```
 wechat-article-to-obsidian/
-├── SKILL.md        # Skill instructions for Claude
+├── SKILL.md        # Agent instructions (workflow + config)
 ├── config.json     # Your vault config (auto-filled on first use)
 ├── README.md       # This file
 └── scripts/
@@ -97,7 +111,7 @@ If `obsidian-cli` is not installed, it falls back to writing directly to your va
 
 ## Requirements
 
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
+- An AI coding agent (Claude Code, OpenClaw, Cursor, or any agent that can run shell commands)
 - [Obsidian](https://obsidian.md)
 - [obsidian-cli](https://github.com/Yakitrak/obsidian-cli) (recommended — falls back to direct file write if not available)
 - Node.js >= 18
