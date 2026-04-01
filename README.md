@@ -25,11 +25,21 @@ WeChat MP articles are server-side rendered — the full article HTML is returne
 
 ### Claude Code
 
-Copy the skill folder to your Claude Code skills directory:
-
 ```bash
 cp -r wechat-article-to-obsidian ~/.claude/skills/
 ```
+
+### OpenClaw (小龙虾)
+
+```bash
+# Option A: manual install
+cp -r wechat-article-to-obsidian ~/.openclaw/workspace/skills/
+
+# Option B: if published to ClawHub
+openclaw skill install wechat-article-to-obsidian
+```
+
+The included `skill.json` provides OpenClaw-compatible metadata (triggers, config schema, script paths).
 
 ### Other AI Agents
 
@@ -92,6 +102,7 @@ Article content with **bold**, *italic*, `code`, and images preserved...
 ```
 wechat-article-to-obsidian/
 ├── SKILL.md        # Agent instructions (workflow + config)
+├── skill.json      # OpenClaw-compatible metadata (triggers, config schema)
 ├── config.json     # Your vault config (auto-filled on first use)
 ├── README.md       # This file
 └── scripts/
